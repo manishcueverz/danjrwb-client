@@ -24,9 +24,9 @@ export const updateDeluiveryAddress = createAsyncThunk('update/deliveryAddress',
 const userInfoSlice = createSlice({
     name: 'userInfo',
     initialState: {
-        user_name: localStorage.getItem('user_name'),
-        mobile_number: localStorage.getItem('user_number'),
-        delivery_address: localStorage.getItem('user_address'),
+        user_name: '',
+        mobile_number: '',
+        delivery_address: '',
     },
     reducers: {
         fetchUserData(state, action) {
@@ -41,7 +41,6 @@ const userInfoSlice = createSlice({
             })
             .addCase(updateDeluiveryAddress.fulfilled, (state, action) => {
                 state.delivery_address = action.payload.address
-                localStorage.setItem('user_address', action.payload.address)
             })
             .addCase(updateDeluiveryAddress.rejected, (state, action) => {
             })

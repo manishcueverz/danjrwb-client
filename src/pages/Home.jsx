@@ -3,20 +3,15 @@ import Header from '../components/Header'
 import SearchBox from '../components/SearchBox'
 import Banner from '../components/Banner'
 import ProductCard from '../components/ProductCard'
-import { useSelector, useDispatch } from 'react-redux'
-import { getProduct, getProductError, getProductStatus, fetchProductList } from "../redux/productSlice";
+import { useSelector } from 'react-redux'
+import { getProduct, getProductError, getProductStatus } from "../redux/productSlice";
 
 const Home = () => {
 
-  const dispatch = useDispatch()
   const productsRV = useSelector(getProduct)
   const productsStatusRV = useSelector(getProductStatus);
   const productsFetchEoorRV = useSelector(getProductError);
   const [productsList, setproductsList] = useState([]);
-
-  useEffect(() => {
-    dispatch(fetchProductList())
-  }, [dispatch])
 
   useEffect(() => {
     if ((productsStatusRV === 'succeeded')) {
@@ -37,7 +32,7 @@ const Home = () => {
             productsFetchEoorRV !== null ? <p>{productsFetchEoorRV}</p> : <>
               {
                 productsList.map((item => {
-                  return <ProductCard value={item}/>
+                  return <ProductCard value={item} />
                 }))
               }
             </>

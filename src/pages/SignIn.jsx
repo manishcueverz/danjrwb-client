@@ -5,6 +5,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import { useDispatch } from 'react-redux'
 import { fetchUserData } from "../redux/userInfoSlice";
 import axios from 'axios';
+import { fetchProductList } from "../redux/productSlice";
 
 const SignIn = () => {
 
@@ -26,15 +27,12 @@ const SignIn = () => {
       .then((response) => {
         console.log(response.data);
         localStorage.setItem('user_token', response.data.token)
-        localStorage.setItem('user_name', response.data.name)
-        localStorage.setItem('user_number', response.data.phone_number)
-        localStorage.setItem('user_address', response.data.address)
         dispatch(fetchUserData({
           name: response.data.name,
           number: response.data.phone_number,
           address: response.data.address
         }))
-
+        dispatch(fetchProductList())
         navigate('/')
       })
       .catch((error) => {
