@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FiLogOut } from "react-icons/fi"
+import { GrRefresh } from "react-icons/gr"
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllOrders, fetchAllOrdersList, getAllOrdersError, getAllOrdersStatus } from "../redux/adminSlice";
 import { format } from 'date-fns'
@@ -21,6 +22,10 @@ const Admin = () => {
     useEffect(() => {
         dispatch(fetchAllOrdersList())
     }, [dispatch, refersh])
+
+    const reLoadData = () => {
+        dispatch(fetchAllOrdersList())
+    }
 
     useEffect(() => {
         if ((ordersListStatusRV === 'succeeded' && ordersListFetchEoorRV === null)) {
@@ -128,9 +133,17 @@ const Admin = () => {
         <div className='bg-gray-100  min-h-screen'>
             <div className='h-20 w-full  flex justify-between items-center p-3 sticky top-0 bg-white '>
                 Admin
-                <FiLogOut
-                    onClick={() => logOut()}
-                />
+                <div className=' flex'>
+                    <GrRefresh
+                        className=' mr-5'
+                        onClick={() => reLoadData()}
+
+                    />
+                    <FiLogOut
+                        onClick={() => logOut()}
+                    />
+                </div>
+
             </div>
             <div className=' flex justify-center items-center'>
                 <SearchBox
@@ -148,7 +161,7 @@ const Admin = () => {
                 </select>
             </div>
             {
-                ordersListStatusRV === 'loading' ? <p className=' text-center'>Loading...</p> : <>
+                ordersListStatusRV === 'loading' ? <p className=' text-center mt-10'>Loading...</p> : <>
                     {
                         ordersListFetchEoorRV !== null ? <p>{ordersListFetchEoorRV}</p> : <>
                             {
