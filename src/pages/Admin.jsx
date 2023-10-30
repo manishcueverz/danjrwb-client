@@ -101,10 +101,11 @@ const Admin = () => {
             else if (event.target.value === 'Deliverd') {
                 filtevalue = 3
             }
-            const filterList = ordersList.filter(item => item.status === filtevalue)
+            const filterList = ordersListRV.filter(item => item.status === filtevalue)
             setOrdersList(filterList)
         }
     }
+
     const handleChange = (value) => {
         setSearchValue(value);
         filterData(value);
@@ -118,11 +119,11 @@ const Admin = () => {
             .replace(/[^\w\s]/gi, "");
         if (lowercasedValue === "") setOrdersList(ordersListRV);
         else {
-            const filteredData = ordersList.filter((item) => item.orderId === Number(lowercasedValue));
+            const filteredData = ordersListRV.filter((item) => item.orderId === Number(lowercasedValue));
             setOrdersList(filteredData);
         }
     };
-    
+
     return (
         <div className='bg-gray-100  min-h-screen'>
             <div className='h-20 w-full  flex justify-between items-center p-3 sticky top-0 bg-white '>
