@@ -33,7 +33,12 @@ const SignIn = () => {
           address: response.data.address
         }))
         dispatch(fetchProductList())
-        navigate('/')
+        if (response.data.type === 'admin') {
+          navigate('/admin')
+        } else {
+          navigate('/')
+        }
+
       })
       .catch((error) => {
         if (error.response) {

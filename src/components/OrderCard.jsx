@@ -12,6 +12,34 @@ const OrderCard = ({ value }) => {
         )
     }
 
+    const orderStatus = (value) => {
+        if (value === 1) {
+            return 'Waiting'
+        } else if (value === 2) {
+            return 'Approved'
+        }
+        else if (value === 3) {
+            return 'Deliverd'
+        }
+        else if (value === 0) {
+            return 'rejected'
+        }
+        return ''
+    }
+    const orderStatusColor = (value) => {
+        if (value === 1) {
+            return 'bg-yellow-200 '
+        } else if (value === 2) {
+            return 'bg-cyan-700'
+        }
+        else if (value === 3) {
+            return 'bg-green-700'
+        }
+        else if (value === 0) {
+            return 'bg-red-500'
+        }
+        return ''
+    }
     return (
         <div className='  bg-white rounded-xl ml-4 mr-4 mt-2 p-4'>
             <div className=''>
@@ -20,7 +48,7 @@ const OrderCard = ({ value }) => {
                         <p className=' text-xs font-semibold'>OrderID:#{value._id}</p>
                         <p className=' text-xs'>{format(value.orderedAt, 'MMMM do yyyy, h:mm a')}</p>
                     </div>
-                    <p className=' text-xs font-semibold  bg-yellow-200  pl-2 pr-2 h-5'>{value.status === 1 ? 'Waiting' : 'Approved'}</p>
+                    <p className={`${orderStatusColor(value.status)} text-xs font-semibold  pl-2 pr-2 h-5`}>{orderStatus(value.status)}</p>
                 </div>
                 {value.products.map((ite => <Product item={ite} />))}
                 <div className='flex justify-end mt-2 pt-2 items-center border-t-2'>
