@@ -38,6 +38,9 @@ const adminSlice = createSlice({
             .addCase(fetchAllOrdersList.fulfilled, (state, action) => {
                 state.status = 'succeeded'
                 state.data = action.payload
+                const dataToSort = [...state.data];
+                const sorted = dataToSort.sort((a, b) => Number(b.orderId) - Number(a.orderId));
+                state.data = sorted
             })
             .addCase(fetchAllOrdersList.rejected, (state, action) => {
                 state.status = 'failed'
