@@ -1,5 +1,5 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import { ProtectRoute } from '../middleware/auth'
 import Home from "../pages/Home";
 import Cart from "../pages/Cart";
@@ -10,52 +10,64 @@ import OrderDetails from "../pages/OrderDetails";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import Admin from "../pages/Admin";
+import { ErrorBoundary } from "react-error-boundary";
+import { ErrorFallback, errorHandler } from "../middleware/errorHandle";
 
 const MainRoute = () => {
+
+    const ErrorBoundaryLayout = () => (
+        <ErrorBoundary FallbackComponent={ErrorFallback} onError={errorHandler}>
+            <Outlet />
+        </ErrorBoundary>
+    );
 
     /** root routes */
     const router = createBrowserRouter([
         {
-            path: '/',
-            element: <ProtectRoute><Home /></ProtectRoute>
-        },
-        {
-            path: '/cart',
-            element: <ProtectRoute><Cart /></ProtectRoute>
-        },
-        {
-            path: '/profile',
-            element: <ProtectRoute><Profile /></ProtectRoute>
-        },
-        {
-            path: '/profile/address',
-            element: <ProtectRoute><Address /></ProtectRoute>
-        },
-        {
-            path: '/profile/orders',
-            element: <ProtectRoute><OrdersList /></ProtectRoute>
-        },
-        {
-            path: '/profile/orders/:id',
-            element: <ProtectRoute><OrderDetails /></ProtectRoute>
-        },
-        {
-            path: '/admin',
-            element: <ProtectRoute><Admin /></ProtectRoute>
-        },
-        {
-            path: '/signin',
-            element: <SignIn />
-        },
-        {
-            path: '/signup',
-            element: <SignUp />
-        },
-
+            element: <ErrorBoundaryLayout />,
+            children: [
+                {
+                    path: '/',
+                    element: <ProtectRoute><Home /></ProtectRoute>
+                },
+                {
+                    path: '/cart',
+                    element: <ProtectRoute><Cart /></ProtectRoute>
+                },
+                {
+                    path: '/profile',
+                    element: <ProtectRoute><Profile /></ProtectRoute>
+                },
+                {
+                    path: '/profile/address',
+                    element: <ProtectRoute><Address /></ProtectRoute>
+                },
+                {
+                    path: '/profile/orders',
+                    element: <ProtectRoute><OrdersList /></ProtectRoute>
+                },
+                {
+                    path: '/profile/orders/:id',
+                    element: <ProtectRoute><OrderDetails /></ProtectRoute>
+                },
+                {
+                    path: '/admin',
+                    element: <ProtectRoute><Admin /></ProtectRoute>
+                },
+                {
+                    path: '/signin',
+                    element: <SignIn />
+                },
+                {
+                    path: '/signup',
+                    element: <SignUp />
+                },
+            ]
+        }
     ])
 
     return (
-        <RouterProvider router={router}></RouterProvider>
+        <RouterProvider router={router} />
     );
 };
 

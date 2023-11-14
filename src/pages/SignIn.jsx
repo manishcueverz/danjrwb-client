@@ -6,9 +6,10 @@ import { useDispatch } from 'react-redux'
 import { fetchUserData } from "../redux/userInfoSlice";
 import axios from 'axios';
 import { fetchProductList } from "../redux/productSlice";
+import { useErrorBoundary } from 'react-error-boundary';
 
 const SignIn = () => {
-
+	const { showBoundary } = useErrorBoundary()
   const dispatch = useDispatch()
   const [open, setOpen] = React.useState(false);
   const [mobile, setMobile] = useState('');
@@ -41,6 +42,7 @@ const SignIn = () => {
 
       })
       .catch((error) => {
+        showBoundary(error)
         if (error.response) {
           console.error('Server Error:', error.response.status);
         } else if (error.request) {
